@@ -25,6 +25,8 @@ jobs:
         id: push-changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
+          git config --global user.email "bot@example.com"
+          git config --global user.name "bot"
           git remote set-url origin https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}
           git commit -am "Automated changes"
           git push
