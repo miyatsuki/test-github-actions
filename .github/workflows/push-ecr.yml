@@ -1,5 +1,6 @@
 name: push_to_ecr
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
