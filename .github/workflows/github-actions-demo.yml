@@ -1,17 +1,25 @@
 name: GitHub Actions Demo
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: setup black
+        id: setup-black
+        run: pip3 install black
+      - name: execute black
+        id: execute-black
+        run: black .
+      - name: check for modified files
+        id: git-check
+        run: echo "::set-output name=has_diff::echo $(git status | grep modified | wc -l) > 0 | bc"
+      - name: push changes
+        id: push-changes
+        if: steps.git-check.outputs.has_diff == '1'
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          git remote set-url origin https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}
+          git commit -am "Automated changes"
+          git push
