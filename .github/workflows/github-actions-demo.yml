@@ -8,7 +8,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: check branch
-        run: echo $GITHUB_REF
+        run: echo ${{github.event.pull_request.head.ref}}
       - name: setup black
         id: setup-black
         run: pip3 install black
