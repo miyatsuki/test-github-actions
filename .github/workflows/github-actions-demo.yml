@@ -1,7 +1,7 @@
-name: GitHub Actions Demo
+name: Code Formatter with black
 on: [pull_request]
 jobs:
-  Explore-GitHub-Actions:
+  Format-Code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
