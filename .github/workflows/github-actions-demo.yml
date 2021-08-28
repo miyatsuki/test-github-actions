@@ -18,6 +18,8 @@ jobs:
         run: black .
       - name: check for modified files(debug)
         run: git status
+      - name: check for modified files(debug2)
+        run: echo "$(git status | grep modified | wc -l) > 0" | bc
       - name: check for modified files
         id: git-check
         run: echo '::set-output name=has_diff::echo "$(git status | grep modified | wc -l) > 0" | bc'
