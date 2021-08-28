@@ -16,16 +16,14 @@ jobs:
       - name: execute black
         id: execute-black
         run: black .
-      - name: check for modified files(debug)
-        run: git status
       - name: check for modified files(debug2)
-        run: echo "$(git status | grep modified | wc -l) > 0" | bc
+        run: git status | grep modified
       - name: check for modified files
         id: git-check
-        run: echo '::set-output name=has_diff::echo "$(git status | grep modified | wc -l) > 0" | bc'
+        run: echo "::set-output name=diff:git status | grep modified"
       - name: push changes
         id: push-changes
-        if: steps.git-check.outputs.has_diff == '1'
+        if: steps.git-check.outputs.diff != ""
         run: |
           git remote set-url origin https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}
           git commit -am "Automated changes"
