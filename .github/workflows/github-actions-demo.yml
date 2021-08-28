@@ -1,22 +1,18 @@
-name: GitHub Actions Demo
+name: Code Formatter with black
 on: [pull_request]
 jobs:
-  Explore-GitHub-Actions:
+  Format-Code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
         with:
           ref: ${{ github.head_ref }}
-      - name: check branch
-        run: echo ${{github.event.pull_request.head.ref}}
       - name: setup black
         id: setup-black
         run: pip3 install black
       - name: execute black
         id: execute-black
         run: black .
-      - name: check for modified files(debug2)
-        run: git status | grep modified
       - name: check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
