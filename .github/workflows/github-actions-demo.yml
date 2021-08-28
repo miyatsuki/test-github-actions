@@ -7,6 +7,9 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.head_ref }}
       - name: setup black
         id: setup-black
         run: pip3 install black
