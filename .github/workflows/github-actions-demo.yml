@@ -20,7 +20,7 @@ jobs:
         run: git status
       - name: check for modified files
         id: git-check
-        run: echo '::set-output name=has_diff::"$(git status | grep modified | wc -l) > 0" | bc'
+        run: echo ''::set-output name=has_diff::echo "$(git status | grep modified | wc -l) > 0" | bc'
       - name: push changes
         id: push-changes
         if: steps.git-check.outputs.has_diff == '1'
