@@ -28,4 +28,4 @@ jobs:
           git config --global user.name "bot"
           git remote set-url origin https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}
           git commit -am "Automated changes"
-          git push origin HEAD:${{github.ref}}
+          git push origin HEAD:${{github.event.pull_request.head.ref}}
